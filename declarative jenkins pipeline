@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+    stages {
+        stage('Clone') {
+            steps {
+                git 'https://github.com/narayanahyniva/cicd-demo.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'npm install'
+                sh 'npm run build'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'npm test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AKIAVKELNHGDVORYSOEV', secretKeyVariable: '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']]) {
+                    sh 'aws s3 sync dist s3://jenkins-cicd-vlf --US East (N. Virginia) us-east-1'
+                }
+            }
+        }
+    }
+}
