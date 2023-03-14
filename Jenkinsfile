@@ -1,22 +1,30 @@
-// Declarative //
 pipeline {
-    agent any 
+    agent any
 
     stages {
-        stage('Build') { 
-            steps { 
-                sh 'make' 
+        stage('Checkout') {
+            steps {
+                checkout scm
             }
         }
-        stage('Test'){
+        stage('Install Dependencies') {
             steps {
-                sh 'make check'
-                junit 'reports/**/*.xml' 
+                sh 'npm install'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'npm test'
             }
         }
         stage('Deploy') {
             steps {
-                sh 'make publish'
+                sh 'npm run deploy'
             }
         }
     }
