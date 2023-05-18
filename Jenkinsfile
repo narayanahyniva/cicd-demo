@@ -1,4 +1,4 @@
-def projectName = "VCm-ms-web"
+def projectName = "vcm-ms-web"
 def devopsRepository="cicd-demo"
 def devOpsrepoVersion="cicd-demo-repo-versions"
 def projectGitRepo="https://github.com/narayanahyniva/cicd-demo.git"
